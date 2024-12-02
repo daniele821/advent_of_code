@@ -32,7 +32,29 @@ func isValid(vals []int) bool {
 	return true
 }
 
-func main() {
+func part1() {
+	file_byte, _ := os.ReadFile("input")
+	file := string(file_byte)
+	count := 0
+	for _, line := range strings.Split(file, "\n") {
+		line := strings.TrimSpace(line)
+		if line == "" {
+			continue
+		}
+		splitted := strings.Fields(line)
+		vals := []int{}
+		for _, elem := range splitted {
+			value, _ := strconv.Atoi(elem)
+			vals = append(vals, value)
+		}
+		if isValid(vals) {
+			count += 1
+		}
+	}
+	fmt.Println(count)
+}
+
+func part2() {
 	file_byte, _ := os.ReadFile("input")
 	file := string(file_byte)
 	count := 0
@@ -58,6 +80,10 @@ func main() {
 			}
 		}
 	}
-
 	fmt.Println(count)
+}
+
+func main() {
+	part1()
+	part2()
 }
