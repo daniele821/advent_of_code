@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func isVal(str string) bool {
@@ -74,6 +75,28 @@ func part1() {
 }
 
 func part2() {
+	fileByte, _ := os.ReadFile("input")
+	file := string(fileByte)
+	length := len(file)
+	acc := 0
+	enabled := true
+	for index, rune := range file {
+		rune_str := string(rune)
+		if rune_str == "d" {
+			rem := file[index:]
+			if strings.HasPrefix(rem, "do()") {
+				enabled = true
+			}
+			if strings.HasPrefix(rem, "don't()") {
+				enabled = false
+			}
+		}
+		if rune_str == "m" && enabled {
+			area := file[index:min(length, index+12)]
+			acc += Accumulate(area)
+		}
+	}
+	fmt.Println(acc)
 }
 
 func main() {
