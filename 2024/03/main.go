@@ -9,7 +9,7 @@ import (
 
 func isVal(str string) bool {
 	if len(str) != 1 {
-		panic("invalid input: str len must be 1!")
+		panic("invalid: str len must be 1!")
 	}
 	runes := []rune(str)
 	return runes[0] >= 48 && runes[0] <= 57
@@ -82,14 +82,14 @@ func part2() {
 	enabled := true
 	for index, rune := range file {
 		rune_str := string(rune)
-		if rune_str == "d" {
-			rem := file[index:]
-			if strings.HasPrefix(rem, "do()") {
-				enabled = true
-			}
-			if strings.HasPrefix(rem, "don't()") {
-				enabled = false
-			}
+		rem := file[index:]
+		if strings.HasPrefix(rem, "do()") {
+			fmt.Println("ENABLE: ", rem[:4])
+			enabled = true
+		}
+		if strings.HasPrefix(rem, "don't()") {
+			fmt.Println("DISABLE: ", rem[:7])
+			enabled = false
 		}
 		if rune_str == "m" && enabled {
 			area := file[index:min(length, index+12)]
