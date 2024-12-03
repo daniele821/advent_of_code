@@ -84,11 +84,9 @@ func part2() {
 		rune_str := string(rune)
 		rem := file[index:]
 		if strings.HasPrefix(rem, "do()") {
-			fmt.Println("ENABLE: ", rem[:4])
 			enabled = true
 		}
 		if strings.HasPrefix(rem, "don't()") {
-			fmt.Println("DISABLE: ", rem[:7])
 			enabled = false
 		}
 		if rune_str == "m" && enabled {
