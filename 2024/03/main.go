@@ -31,6 +31,33 @@ func startsWithNum(str string) (value, length int, found bool) {
 	return val, len(res), true
 }
 
+func Accumulate(area string) int {
+	if area[:4] != "mul(" {
+		return 0
+	}
+	area = area[4:]
+	val1, l, found := startsWithNum(area)
+	if !found {
+		return 0
+	} else {
+		area = area[l:]
+	}
+	if area[:1] != "," {
+		return 0
+	}
+	area = area[1:]
+	val2, l, found := startsWithNum(area)
+	if !found {
+		return 0
+	} else {
+		area = area[l:]
+	}
+	if area[:1] != ")" {
+		return 0
+	}
+	return val1 * val2
+}
+
 func part1() {
 	fileByte, _ := os.ReadFile("input")
 	file := string(fileByte)
@@ -40,30 +67,7 @@ func part1() {
 		rune_str := string(rune)
 		if rune_str == "m" {
 			area := file[index:min(length, index+12)]
-			if area[:4] != "mul(" {
-				continue
-			}
-			area = area[4:]
-			val1, l, found := startsWithNum(area)
-			if !found {
-				continue
-			} else {
-				area = area[l:]
-			}
-			if area[:1] != "," {
-				continue
-			}
-			area = area[1:]
-			val2, l, found := startsWithNum(area)
-			if !found {
-				continue
-			} else {
-				area = area[l:]
-			}
-			if area[:1] != ")" {
-				continue
-			}
-			acc += val1 * val2
+			acc += Accumulate(area)
 		}
 	}
 	fmt.Println(acc)
