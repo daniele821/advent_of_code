@@ -51,7 +51,7 @@ func countXmas(board [][]string, a, b int) int {
 
 func countXmas2(board [][]string, a, b int) int {
 	word1 := board[a-1][b-1] + board[a][b] + board[a+1][b+1]
-	word2 := board[a-1][b-1] + board[a][b] + board[a+1][b+1]
+	word2 := board[a+1][b-1] + board[a][b] + board[a-1][b+1]
 	if (word1 == "SAM" || word1 == "MAS") && (word2 == "SAM" || word2 == "MAS") {
 		return 1
 	}
