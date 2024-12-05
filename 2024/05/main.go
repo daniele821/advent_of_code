@@ -7,12 +7,13 @@ import (
 	"strings"
 )
 
-func parseFile(file string) (map[int][]int, map[int][]int, [][]int) {
+func parseFile(file string) (map[int][]int, map[int][]int, [][]int, [][]int) {
 	fileByte, _ := os.ReadFile(file)
 	fileStr := string(fileByte)
 	phase := 0
 	order1 := map[int][]int{}
 	order2 := map[int][]int{}
+	precedences := [][]int{}
 	for _, line := range strings.Split(fileStr, "\n") {
 		if line == "" {
 			phase++
@@ -26,6 +27,7 @@ func parseFile(file string) (map[int][]int, map[int][]int, [][]int) {
 			}
 			val0, _ := strconv.Atoi(vals[0])
 			val1, _ := strconv.Atoi(vals[1])
+			precedences = append(precedences, []int{val0, val1})
 			if val, ok := order1[val0]; ok {
 				order1[val0] = append(val, val1)
 			} else {
@@ -39,13 +41,14 @@ func parseFile(file string) (map[int][]int, map[int][]int, [][]int) {
 		case 1:
 		}
 	}
-	return order1, order2, nil
+	return order1, order2, precedences, nil
 }
 
 func part1() {
-	order1, order2, lists := parseFile("example1")
+	order1, order2, precedences, lists := parseFile("example1")
 	fmt.Println(order1)
 	fmt.Println(order2)
+	fmt.Println(precedences)
 	fmt.Println(lists)
 }
 
