@@ -65,8 +65,40 @@ func correctOrder(precedences [][]int, line []int) (acc, errs int) {
 	return line[len(line)/2], errs
 }
 
+func removeElement(elem int, slice []int) []int {
+	index := slices.Index(slice, elem)
+	if index == -1 {
+		panic("unable to remove elem")
+	}
+	return append(slice[:index], slice[index+1:]...)
+}
+
 func incorrectOrder(order1, order2 map[int][]int, precedences [][]int, line []int) int {
-	return 0
+	lineCopy := make([]int, len(line))
+	copy(lineCopy, line)
+	newVals := []int{}
+
+	for len(lineCopy) > 0 {
+		for i, value := range lineCopy {
+			afterVal := order2[value]
+			count := 0
+			for i2, value2 := range lineCopy {
+				if i2 == i {
+					continue
+				}
+				if slices.Contains(afterVal, value2) {
+					count++
+				}
+			}
+			if count == 0 {
+				newVals = append(newVals, value)
+				lineCopy = removeElement(value, lineCopy)
+				break
+			}
+		}
+	}
+	fmt.Println(newVals)
+	return newVals[len(newVals)/2]
 }
 
 func part1() {
@@ -94,6 +126,6 @@ func part2() {
 }
 
 func main() {
-	part1()
+	// part1()
 	part2()
 }
