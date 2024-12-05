@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func parseFile(file string) (order1 map[int][]int, order2 map[int][]int, precedences [][]int, updates [][]int) {
+func parseFile(file string) (order1, order2 map[int][]int, precedences [][]int, updates [][]int) {
 	fileByte, _ := os.ReadFile(file)
 	fileStr := string(fileByte)
 	phase := 0
@@ -65,6 +65,10 @@ func correctOrder(precedences [][]int, line []int) (acc, errs int) {
 	return line[len(line)/2], errs
 }
 
+func incorrectOrder(order1, order2 map[int][]int, precedences [][]int, line []int) int {
+	return 0
+}
+
 func part1() {
 	_, _, precedences, lists := parseFile("input")
 	acc := 0
@@ -77,7 +81,17 @@ func part1() {
 	fmt.Println(acc)
 }
 
-func part2() {}
+func part2() {
+	order1, order2, precedences, lists := parseFile("input")
+	acc := 0
+	for _, list := range lists {
+		_, errs := correctOrder(precedences, list)
+		if errs != 0 {
+			acc += incorrectOrder(order1, order2, precedences, list)
+		}
+	}
+	fmt.Println(acc)
+}
 
 func main() {
 	part1()
