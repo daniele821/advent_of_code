@@ -39,9 +39,16 @@ func parseFile(file string) (order1 map[int][]int, order2 map[int][]int, precede
 				order2[val1] = []int{val0}
 			}
 		case 1:
+			vals := strings.Split(line, ",")
+			valsInt := []int{}
+			for _, val := range vals {
+				value, _ := strconv.Atoi(val)
+				valsInt = append(valsInt, value)
+			}
+			updates = append(updates, valsInt)
 		}
 	}
-	return order1, order2, precedences, nil
+	return order1, order2, precedences, updates
 }
 
 func part1() {
