@@ -7,13 +7,13 @@ import (
 	"strings"
 )
 
-func parseFile(file string) (map[int][]int, map[int][]int, [][]int, [][]int) {
+func parseFile(file string) (order1 map[int][]int, order2 map[int][]int, precedences [][]int, updates [][]int) {
 	fileByte, _ := os.ReadFile(file)
 	fileStr := string(fileByte)
 	phase := 0
-	order1 := map[int][]int{}
-	order2 := map[int][]int{}
-	precedences := [][]int{}
+	order1 = map[int][]int{}
+	order2 = map[int][]int{}
+	precedences = [][]int{}
 	for _, line := range strings.Split(fileStr, "\n") {
 		if line == "" {
 			phase++
