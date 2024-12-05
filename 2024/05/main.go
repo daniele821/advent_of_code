@@ -66,7 +66,7 @@ func correctOrder(precedences [][]int, line []int) (acc, errs int) {
 }
 
 func part1() {
-	_, _, precedences, lists := parseFile("example1")
+	_, _, precedences, lists := parseFile("input")
 	acc := 0
 	for _, list := range lists {
 		tmp, errs := correctOrder(precedences, list)
