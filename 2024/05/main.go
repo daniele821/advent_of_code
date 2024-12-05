@@ -1,15 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
 )
 
-func parseFile(file string) (order map[int][]int) {
+func parseFile(file string) map[int][]int {
 	fileByte, _ := os.ReadFile(file)
 	fileStr := string(fileByte)
 	phase := 0
+	order := map[int][]int{}
 	for _, line := range strings.Split(fileStr, "\n") {
 		if line == "" {
 			phase++
@@ -26,7 +28,7 @@ func parseFile(file string) (order map[int][]int) {
 			if val, ok := order[val0]; ok {
 				order[val0] = append(val, val1)
 			} else {
-				order[val0] = []int{val0}
+				order[val0] = []int{val1}
 			}
 		case 1:
 		}
@@ -35,7 +37,8 @@ func parseFile(file string) (order map[int][]int) {
 }
 
 func part1() {
-	parseFile("example1")
+	order := parseFile("example1")
+	fmt.Println(order)
 }
 
 func part2() {}
