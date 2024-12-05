@@ -52,24 +52,27 @@ func parseFile(file string) (order1 map[int][]int, order2 map[int][]int, precede
 	return order1, order2, precedences, updates
 }
 
-func correctOrder(precedences [][]int, line []int) int {
+func correctOrder(precedences [][]int, line []int) (acc, errs int) {
 	for _, prec := range precedences {
 		index1 := slices.Index(line, prec[0])
 		index2 := slices.Index(line, prec[1])
 		if index1 >= 0 && index2 >= 0 {
 			if index1 >= index2 {
-				return 0
+				errs++
 			}
 		}
 	}
-	return line[len(line)/2]
+	return line[len(line)/2], errs
 }
 
 func part1() {
-	_, _, precedences, lists := parseFile("input")
+	_, _, precedences, lists := parseFile("example1")
 	acc := 0
 	for _, list := range lists {
-		acc += correctOrder(precedences, list)
+		tmp, errs := correctOrder(precedences, list)
+		if errs == 0 {
+			acc += tmp
+		}
 	}
 	fmt.Println(acc)
 }
