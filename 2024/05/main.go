@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -51,12 +52,26 @@ func parseFile(file string) (order1 map[int][]int, order2 map[int][]int, precede
 	return order1, order2, precedences, updates
 }
 
+func correctOrder(precedences [][]int, line []int) int {
+	for _, prec := range precedences {
+		index1 := slices.Index(line, prec[0])
+		index2 := slices.Index(line, prec[1])
+		if index1 >= 0 && index2 >= 0 {
+			if index1 >= index2 {
+				return 0
+			}
+		}
+	}
+	return line[len(line)/2]
+}
+
 func part1() {
-	order1, order2, precedences, lists := parseFile("example1")
-	fmt.Println(order1)
-	fmt.Println(order2)
-	fmt.Println(precedences)
-	fmt.Println(lists)
+	_, _, precedences, lists := parseFile("example1")
+	acc := 0
+	for _, list := range lists {
+		acc += correctOrder(precedences, list)
+	}
+	fmt.Println(acc)
 }
 
 func part2() {}
