@@ -97,7 +97,6 @@ func incorrectOrder(order1, order2 map[int][]int, precedences [][]int, line []in
 			}
 		}
 	}
-	fmt.Println(newVals)
 	return newVals[len(newVals)/2]
 }
 
