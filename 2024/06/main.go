@@ -30,6 +30,17 @@ func printGrid(grid [][]string) {
 	}
 	fmt.Println()
 }
+func countGrid(grid [][]string) {
+	count := 0
+	for _, line := range grid {
+		for _, char := range line {
+			if char == "X" {
+				count++
+			}
+		}
+	}
+	fmt.Println(count)
+}
 
 func solve(file string) {
 	fileStr, _ := os.ReadFile(file)
@@ -57,7 +68,6 @@ func solve(file string) {
 		if !(x >= 0 && y >= 0 && x < size && y < size) {
 			break
 		}
-		printGrid(tracked)
 		if square[x][y] == "#" {
 			x -= dirx
 			y -= diry
@@ -76,10 +86,11 @@ func solve(file string) {
 			}
 		}
 	}
+	countGrid(tracked)
 
 }
 
 func main() {
 	solve("example")
-	// solve("input")
+	solve("input")
 }
